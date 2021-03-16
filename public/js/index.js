@@ -16,11 +16,11 @@ let opponent = {
 
 document.querySelector(".overlay").style.visibility = "visible";
 
-// let username = localStorage.getItem("username-toc-tac-toe-suaprth");
-// if (!username) {
-username = prompt("Enter your Username");
-// localStorage.setItem("username-toc-tac-toe-suaprth", username);
-// }
+let username = localStorage.getItem("username-toc-tac-toe-suaprth");
+if (!username) {
+  username = prompt("Enter your Username");
+  localStorage.setItem("username-toc-tac-toe-suaprth", username);
+}
 self.username = username;
 
 socket.on("userJoin", ({ id }) => {
