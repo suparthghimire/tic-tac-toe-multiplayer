@@ -43,11 +43,24 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("markPlaced", { boxId, turn });
   });
 
+  socket.on("turnChanged", ({ turn }) => {
+    let newTurn = turn;
+    io.emit("turnChanged", { newTurn });
+  });
+
   socket.on("message", ({ message, username }) => {
     io.emit("message", { message, username });
   });
   socket.on("disconnect", () => {
     users = [];
     io.emit("userdisconnected", socket.id);
+  });
+  socket.on("win", ({ turn }) => {
+    console.log(`${turn} won the game`);
+    io.emit("win", { turn });
+  });
+  socket.on("draw", () => {
+    console.log(`the game was drawn`);
+    io.emit("draw");
   });
 });

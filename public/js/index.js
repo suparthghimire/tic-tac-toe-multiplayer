@@ -15,6 +15,7 @@ let opponent = {
 };
 
 document.querySelector(".overlay").style.visibility = "visible";
+document.querySelector(".result_overlay").style.visibility = "hidden";
 
 let username = localStorage.getItem("username-toc-tac-toe-suaprth");
 if (!username) {
@@ -35,10 +36,8 @@ socket.on("allUsers", (users) => {
     opponent.id = users.find((user) => user.id != self.id).id;
     opponent.username = users.find((user) => user.id != self.id).username;
 
-    self.sign = users.find((user) => user.username == self.username).sign;
-    opponent.sign = users.find(
-      (user) => user.username == opponent.username
-    ).sign;
+    self.sign = users.find((user) => user.id == self.id).sign;
+    opponent.sign = users.find((user) => user.id == opponent.id).sign;
 
     console.log(`Self: ${self.username} - ${self.id} - ${self.sign}`);
     console.log(
@@ -77,13 +76,22 @@ socket.on("gameStart", () => {
     [2, 4, 6],
   ];
   let turn = "x";
+
   const boxes = document.querySelectorAll(".box");
 
   initialState();
 
+  function checkTurn() {
+    return turn == self.sign;
+  }
+
   function initialState() {
     boxes.forEach((box) => {
       box.classList = "box";
+      disableButtons();
+      if (checkTurn()) {
+        enableButtons();
+      }
       box.addEventListener("click", handleClick, { once: true });
     });
   }
@@ -92,11 +100,11 @@ socket.on("gameStart", () => {
     placeMark(e.target);
 
     if (checkWin()) {
-      console.log(`${turn} Wins`);
+      socket.emit("win", { turn });
     }
     // check for draw
     else if (checkDraw()) {
-      console.log("Draw");
+      socket.emit("draw");
     } else swapTurn();
   }
 
@@ -127,10 +135,42 @@ socket.on("gameStart", () => {
   function swapTurn() {
     if (turn == self.sign) turn = opponent.sign;
     else turn = self.sign;
+    disableButtons();
+    socket.emit("turnChanged", { turn });
   }
 
-  function disableButtons() {}
-  function enableButtons() {}
+  socket.on("turnChanged", ({ newTurn }) => {
+    turn = newTurn;
+    console.log("newTurn: ", turn);
+
+    if (checkTurn()) {
+      enableButtons();
+    }
+  });
+
+  function disableButtons() {
+    boxes.forEach((box) => (box.disabled = true));
+  }
+  function enableButtons() {
+    boxes.forEach((box) => (box.disabled = false));
+  }
+  socket.on("win", ({ turn }) => {
+    endGame("win", turn);
+  });
+  socket.on("draw", () => {
+    endGame("draw");
+  });
+
+  function endGame(status, turn) {
+    let message;
+    if (status == "win") {
+      message = turn + " Won the Game!";
+    } else if (status == "draw") {
+      message = "The game was Drawn";
+    }
+    document.querySelector(".result_overlay").innerHTML = message;
+    document.querySelector(".result_overlay").style.visibility = "visible";
+  }
 
   // game
 });
