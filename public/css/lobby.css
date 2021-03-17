@@ -1,0 +1,87 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Raleway", "Segoe UI", Tahoma, Geneva, Verdana, Arial sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    padding: 10px;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+.players-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.username {
+    font-style: normal;
+}
+
+.player {
+    margin: 10px 0;
+    min-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 6px 0#2a2a2a3b;
+    align-items: flex-start;
+}
+
+.user-info {
+    font-style: italic;
+    position: relative;
+}
+
+.name {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.challange-btn {
+    padding: 10px;
+    border: 0;
+    cursor: pointer;
+    background: rgb(63, 63, 252);
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.search {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 0;
+}
+
+.search:focus {
+    outline: none;
+    border-bottom: 2px solid #2a2a2a;
+}

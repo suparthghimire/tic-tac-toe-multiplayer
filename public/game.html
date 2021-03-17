@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Multiplayer</title>
+    <link rel="stylesheet" href="/css/game.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+</head>
+
+<body>
+    <div class="overlay">
+        Waiting for Opponent Player to Join
+    </div>
+    <div class="result_overlay">
+        You Won
+    </div>
+    <div class="container">
+        <div class="player opponent">
+            <span class="opponent_score">Score</span>
+            <h2 class="opponent_name">Opponent Name</h2>
+        </div>
+        <div class="game-board">
+            <button id="0" class="box"></button>
+            <button id="1" class="box"></button>
+            <button id="2" class="box"></button>
+            <button id="3" class="box"></button>
+            <button id="4" class="box"></button>
+            <button id="5" class="box"></button>
+            <button id="6" class="box"></button>
+            <button id="7" class="box"></button>
+            <button id="8" class="box"></button>
+        </div>
+        <div class="player self">
+            <span class="self_score">Score</span>
+            <h2 class="self_name">Self Name</h2>
+        </div>
+    </div>
+    <div class="chat">
+        <ul class="chat-messages">
+
+            <li class="chat-item">
+                <h3 class="username">
+                    Room Master
+                </h3>
+                <p class="message">
+                    Hey Players, Chat with your opponent here 😃
+                </p>
+            </li>
+        </ul>
+        <form class="chat-form" id="chat-form">
+            <div class="form-group">
+                <input placeholder="Enter your Message" autocomplete="off" type="text" name="chatInput" id="message-form" class="form-control">
+                <label class="form-message" for="message-form"></label>
+            </div>
+
+            <button>Send</button>
+        </form>
+    </div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+
+</html>

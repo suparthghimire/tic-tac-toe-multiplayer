@@ -11,6 +11,7 @@ app.use(express.static(path.join(__dirname, "public")));
 server.listen(PORT, () => console.log(`Server Started At Port ${PORT}`));
 
 let users = [];
+
 io.on("connection", (socket) => {
   let id = socket.id;
   socket.emit("userJoin", { id });
